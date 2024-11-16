@@ -65,7 +65,7 @@ void MassPoint::update_acceleration()
 
 void Scene4::init()
 {
-    m_dt = 0.001;
+    m_dt = 0.1;
 
     m_mass_points.emplace_back(std::make_shared<MassPoint>(10, 0, 0, 0, -1, 0, 0));
     m_mass_points.emplace_back(std::make_shared<MassPoint>(10, 0, 2, 0, 1, 0, 0));
@@ -75,30 +75,26 @@ void Scene4::init()
     m_springs[0]->connect(m_mass_points[0], m_mass_points[1]);
 }
 
-// int cnt = 0;
+int cnt = 0;
 void Scene4::simulateStep()
 {
-    for (auto mp : m_mass_points) {
-        mp->m_f = glm::vec3(0);
+    if (cnt >= 1) {
+        exit(0);
     }
+    update_position<IntegrationType::MidPoint>();
+    cnt++;
 
-    // if (cnt >= 1) {
-    //     exit(0);
+    std::cout<< "x0 " << m_mass_points[0]->m_p.x << " "<< m_mass_points[0]->m_p.y << " "<< m_mass_points[0]->m_p.z <<
+    std::endl; std::cout<< "x1 " << m_mass_points[1]->m_p.x << " "<< m_mass_points[1]->m_p.y << " "<<
+    m_mass_points[1]->m_p.z << std::endl; std::cout<< "v0 " << m_mass_points[0]->m_v.x << " "<<
+    m_mass_points[0]->m_v.y << " "<< m_mass_points[0]->m_v.z << std::endl; std::cout<< "v1 " <<
+    m_mass_points[1]->m_v.x << " "<< m_mass_points[1]->m_v.y << " "<< m_mass_points[1]->m_v.z << std::endl;
+
+    // if (m_mode == 0) {
+    //     update_position<IntegrationType::Euler>();
+    // } else {
+    //     update_position<IntegrationType::MidPoint>();
     // }
-    // update_position<IntegrationType::MidPoint>();
-    // cnt++;
-
-    // std::cout<< "x0 " << m_mass_points[0]->m_p.x << " "<< m_mass_points[0]->m_p.y << " "<< m_mass_points[0]->m_p.z <<
-    // std::endl; std::cout<< "x1 " << m_mass_points[1]->m_p.x << " "<< m_mass_points[1]->m_p.y << " "<<
-    // m_mass_points[1]->m_p.z << std::endl; std::cout<< "v0 " << m_mass_points[0]->m_v.x << " "<<
-    // m_mass_points[0]->m_v.y << " "<< m_mass_points[0]->m_v.z << std::endl; std::cout<< "v1 " <<
-    // m_mass_points[1]->m_v.x << " "<< m_mass_points[1]->m_v.y << " "<< m_mass_points[1]->m_v.z << std::endl;
-
-    if (m_mode == 0) {
-        update_position<IntegrationType::Euler>();
-    } else {
-        update_position<IntegrationType::MidPoint>();
-    }
 }
 
 void Scene4::onDraw(Renderer &renderer)

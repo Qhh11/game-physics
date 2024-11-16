@@ -79,27 +79,16 @@ class Scene4 : public Scene
 
 template <> inline void Scene4::update_position<IntegrationType::Euler>()
 {
+    for (auto mp : m_mass_points) {
+        mp->m_f = glm::vec3(0);
+    }
+
     for (auto s : m_springs) {
         s->apply_elastic_force();
     }
 
     for (auto mp : m_mass_points) {
         mp->m_p += m_dt * mp->m_v;
-
-        if (m_allow_collision) {
-            if (mp->m_p.x > m_cube_size / 2)
-                mp->m_p.x = m_cube_size / 2, mp->m_v.x = -mp->m_v.x;
-            if (mp->m_p.y > m_cube_size / 2)
-                mp->m_p.y = m_cube_size / 2, mp->m_v.y = -mp->m_v.y;
-            if (mp->m_p.z > m_cube_size / 2)
-                mp->m_p.z = m_cube_size / 2, mp->m_v.z = -mp->m_v.z;
-            if (mp->m_p.x < -m_cube_size / 2)
-                mp->m_p.x = -m_cube_size / 2, mp->m_v.x = -mp->m_v.x;
-            if (mp->m_p.y < -m_cube_size / 2)
-                mp->m_p.y = -m_cube_size / 2, mp->m_v.y = -mp->m_v.y;
-            if (mp->m_p.z < -m_cube_size / 2)
-                mp->m_p.z = -m_cube_size / 2, mp->m_v.z = -mp->m_v.z;
-        }
     }
 
     for (auto mp : m_mass_points) {
@@ -130,6 +119,10 @@ template <> inline void Scene4::update_position<IntegrationType::Euler>()
 
 template <> inline void Scene4::update_position<IntegrationType::MidPoint>()
 {
+    for (auto mp : m_mass_points) {
+        mp->m_f = glm::vec3(0);
+    }
+
     std::vector<glm::vec3> tmp_p, tmp_v;
 
     for (auto s : m_springs) {
@@ -148,6 +141,10 @@ template <> inline void Scene4::update_position<IntegrationType::MidPoint>()
     for (auto mp : m_mass_points) {
         tmp_v.push_back(mp->m_v);
         mp->m_v += 0.5f * m_dt * mp->m_a;
+    }
+
+    for (auto mp : m_mass_points) {
+        mp->m_f = glm::vec3(0);
     }
 
     for (auto s : m_springs) {
