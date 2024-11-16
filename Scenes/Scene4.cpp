@@ -65,7 +65,7 @@ void MassPoint::update_acceleration()
 
 void Scene4::init()
 {
-    m_dt = 0.0001;
+    m_dt = 0.001;
 
     m_mass_points.emplace_back(std::make_shared<MassPoint>(10, 0, 0, 0, -1, 0, 0));
     m_mass_points.emplace_back(std::make_shared<MassPoint>(10, 0, 2, 0, 1, 0, 0));
@@ -78,6 +78,10 @@ void Scene4::init()
 // int cnt = 0;
 void Scene4::simulateStep()
 {
+    for (auto mp : m_mass_points) {
+        mp->m_f = glm::vec3(0);
+    }
+
     // if (cnt >= 1) {
     //     exit(0);
     // }
@@ -112,7 +116,7 @@ void Scene4::onDraw(Renderer &renderer)
 
 void Scene4::onGUI()
 {
-    ImGui::SliderFloat("Delta t", &m_dt, 0.00001f, 0.001f);
+    ImGui::SliderFloat("Delta t", &m_dt, 0.00001f, 0.1f);
 
     if (ImGui::RadioButton("Euler", &m_mode, 0)) {
         std::cout << "Set to Euler" << std::endl;

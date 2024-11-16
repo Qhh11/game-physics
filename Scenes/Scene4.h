@@ -41,7 +41,7 @@ class MassPoint
 
     void onDraw(Renderer &renderer);
     glm::vec3 m_p, m_v, m_a, m_f;
-    bool m_allow_gravity;
+    bool m_allow_gravity = false;
 
     void update_acceleration();
 
@@ -70,8 +70,8 @@ class Scene4 : public Scene
     std::vector<std::shared_ptr<Spring>> m_springs;
     float m_dt;
     int m_mode;
-    bool m_allow_collision;
-    bool m_allow_gravity;
+    bool m_allow_collision = false;
+    bool m_allow_gravity = false;
     const float m_cube_size = 5;
 
     template <IntegrationType> void update_position();
