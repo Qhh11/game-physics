@@ -70,8 +70,9 @@ class Scene4 : public Scene
     std::vector<std::shared_ptr<Spring>> m_springs;
     float m_dt;
     int m_mode;
-    bool m_allow_collision = false;
+    bool m_allow_collision = true;
     bool m_allow_gravity = false;
+    float m_collision_energy_discount = 0.7;
     const float m_cube_size = 5;
 
     template <IntegrationType> void update_position();
@@ -102,17 +103,17 @@ template <> inline void Scene4::update_position<IntegrationType::Euler>()
     for (auto mp : m_mass_points) {
         if (m_allow_collision) {
             if (mp->m_p.x > m_cube_size / 2)
-                mp->m_p.x = m_cube_size / 2, mp->m_v.x = -mp->m_v.x;
+                mp->m_p.x = m_cube_size / 2, mp->m_v.x = -mp->m_v.x * m_collision_energy_discount;
             if (mp->m_p.y > m_cube_size / 2)
-                mp->m_p.y = m_cube_size / 2, mp->m_v.y = -mp->m_v.y;
+                mp->m_p.y = m_cube_size / 2, mp->m_v.y = -mp->m_v.y * m_collision_energy_discount;
             if (mp->m_p.z > m_cube_size / 2)
-                mp->m_p.z = m_cube_size / 2, mp->m_v.z = -mp->m_v.z;
+                mp->m_p.z = m_cube_size / 2, mp->m_v.z = -mp->m_v.z * m_collision_energy_discount;
             if (mp->m_p.x < -m_cube_size / 2)
-                mp->m_p.x = -m_cube_size / 2, mp->m_v.x = -mp->m_v.x;
+                mp->m_p.x = -m_cube_size / 2, mp->m_v.x = -mp->m_v.x * m_collision_energy_discount;
             if (mp->m_p.y < -m_cube_size / 2)
-                mp->m_p.y = -m_cube_size / 2, mp->m_v.y = -mp->m_v.y;
+                mp->m_p.y = -m_cube_size / 2, mp->m_v.y = -mp->m_v.y * m_collision_energy_discount;
             if (mp->m_p.z < -m_cube_size / 2)
-                mp->m_p.z = -m_cube_size / 2, mp->m_v.z = -mp->m_v.z;
+                mp->m_p.z = -m_cube_size / 2, mp->m_v.z = -mp->m_v.z * m_collision_energy_discount;
         }
     }
 }
@@ -166,17 +167,17 @@ template <> inline void Scene4::update_position<IntegrationType::MidPoint>()
     for (int i = 0; i < m_mass_points.size(); i++) {
         if (m_allow_collision) {
             if (m_mass_points[i]->m_p.x > m_cube_size / 2)
-                m_mass_points[i]->m_p.x = m_cube_size / 2, m_mass_points[i]->m_v.x = -m_mass_points[i]->m_v.x;
+                m_mass_points[i]->m_p.x = m_cube_size / 2, m_mass_points[i]->m_v.x = -m_mass_points[i]->m_v.x * m_collision_energy_discount;
             if (m_mass_points[i]->m_p.y > m_cube_size / 2)
-                m_mass_points[i]->m_p.y = m_cube_size / 2, m_mass_points[i]->m_v.y = -m_mass_points[i]->m_v.y;
+                m_mass_points[i]->m_p.y = m_cube_size / 2, m_mass_points[i]->m_v.y = -m_mass_points[i]->m_v.y * m_collision_energy_discount;
             if (m_mass_points[i]->m_p.z > m_cube_size / 2)
-                m_mass_points[i]->m_p.z = m_cube_size / 2, m_mass_points[i]->m_v.z = -m_mass_points[i]->m_v.z;
+                m_mass_points[i]->m_p.z = m_cube_size / 2, m_mass_points[i]->m_v.z = -m_mass_points[i]->m_v.z * m_collision_energy_discount;
             if (m_mass_points[i]->m_p.x < -m_cube_size / 2)
-                m_mass_points[i]->m_p.x = -m_cube_size / 2, m_mass_points[i]->m_v.x = -m_mass_points[i]->m_v.x;
+                m_mass_points[i]->m_p.x = -m_cube_size / 2, m_mass_points[i]->m_v.x = -m_mass_points[i]->m_v.x * m_collision_energy_discount;
             if (m_mass_points[i]->m_p.y < -m_cube_size / 2)
-                m_mass_points[i]->m_p.y = -m_cube_size / 2, m_mass_points[i]->m_v.y = -m_mass_points[i]->m_v.y;
+                m_mass_points[i]->m_p.y = -m_cube_size / 2, m_mass_points[i]->m_v.y = -m_mass_points[i]->m_v.y * m_collision_energy_discount;
             if (m_mass_points[i]->m_p.z < -m_cube_size / 2)
-                m_mass_points[i]->m_p.z = -m_cube_size / 2, m_mass_points[i]->m_v.z = -m_mass_points[i]->m_v.z;
+                m_mass_points[i]->m_p.z = -m_cube_size / 2, m_mass_points[i]->m_v.z = -m_mass_points[i]->m_v.z * m_collision_energy_discount;
         }
     }
 }
