@@ -10,6 +10,7 @@ public:
     void init() override;
 
 private:
+    virtual void onDraw(Renderer &renderer) override;
     virtual void simulateStep() override;
     void simulateOneStep();
     glm::vec3 springForce(const glm::vec3 &p1, const glm::vec3 &p2, float restLength, float stiffness);

@@ -75,3 +75,4 @@ void Scene1::simulateOneStep()
 }
 
 void Scene1::simulateStep() {};
+void Scene1::onDraw(Renderer &renderer) {};
