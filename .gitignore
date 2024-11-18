@@ -3,3 +3,4 @@ imgui.ini
 docs/html
 .DS_Store
 .clang_format
+.vscode
