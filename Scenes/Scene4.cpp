@@ -3,7 +3,13 @@
 #include "util/CollisionDetection.h"
 using namespace collisionTools;
 
+#include <imgui.h>
+
 void Scene4::init() {
+    // for (auto& box: boxes) {
+    //     box.external_force += glm::vec3(1.f, 1.f, 0.f);
+    //     box.torque += glm::cross(glm::vec3(0.3f, 0.5f, 0.25f) - box.x_cm, glm::vec3(1.f, 1.f, 0.f));
+    // }
 }
 
 // From task sheet
@@ -54,6 +60,10 @@ void Scene4::simulateStep() {
         box.orientation = glm::normalize(box.orientation);
         box.angular_momentum += time_step * box.torque;
 
+        // std::cout<<"Inertia Tensor box.inertia_inversed"<<std::endl;
+        // auto tmp_mat = glm::inverse(box.inertia_inversed);
+        // std::cout<<tmp_mat[0][0]<<" "<<tmp_mat[0][1]<<" "<<tmp_mat[0][2]<<" "<<std::endl; std::cout<<tmp_mat[1][0]<<" "<<tmp_mat[1][1]<<" "<<tmp_mat[1][2]<<" "<<std::endl; std::cout<<tmp_mat[2][0]<<" "<<tmp_mat[2][1]<<""<<tmp_mat[2][2]<<" "<<std::endl;
+
         auto rot = glm::mat3_cast(box.orientation);
         box.inertia_inversed = rot * box.inertia_inversed * glm::transpose(rot);
         box.angular_velocity = box.inertia_inversed * box.angular_momentum;
@@ -62,10 +72,22 @@ void Scene4::simulateStep() {
         box.torque = glm::vec3(0.f);
         box.external_force = glm::vec3(0.f);
         box.delta_momentum = glm::vec3(0.f);
+
+        // std::cout << "updated mass point position: " << box.x_cm.x << " " << box.x_cm.y << " " << box.x_cm.z << std::endl;
+        // std::cout << "updated linear velocity: " << box.velocity.x << " " << box.velocity.y << " " << box.velocity.z << std::endl;
+        // std::cout << "updated orientation: " << box.orientation.x << " " << box.orientation.y << " " << box.orientation.z << " " << box.orientation.w << std::endl;
+        // std::cout << "Angular Momentum: " << box.angular_momentum.x << " " << box.angular_momentum.y << " " << box.angular_momentum.z << std::endl;
+        // std::cout<<"Inertia Tensor box.inertia_inversed"<<std::endl;
+        // std::cout<<box.inertia_inversed[0][0]<<" "<<box.inertia_inversed[0][1]<<" "<<box.inertia_inversed[0][2]<<" "<<std::endl; std::cout<<box.inertia_inversed[1][0]<<" "<<box.inertia_inversed[1][1]<<" "<<box.inertia_inversed[1][2]<<" "<<std::endl; std::cout<<box.inertia_inversed[2][0]<<" "<<box.inertia_inversed[2][1]<<""<<box.inertia_inversed[2][2]<<" "<<std::endl;
+
+        // std::cout<<"Angular Velocity: "<<box.angular_velocity.x<<" "<<box.angular_velocity.y<<" "<<box.angular_velocity.z<<std::endl;
+        // assert(false);
     }
 }
 
 void Scene4::onDraw(Renderer &renderer) {
+    renderer.drawWireCube(glm::vec3(0), glm::vec3(5), glm::vec3(1));
+    
     for (auto& box: boxes) {
         renderer.drawCube(box.x_cm, box.orientation, box.extent, box.color);
     }
