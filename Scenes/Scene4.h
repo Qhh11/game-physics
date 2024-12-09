@@ -58,9 +58,10 @@ private:
         RigidBox(glm::vec3(0.f, 0.f, 2.f)),
         RigidBox(glm::vec3(0.f, 0.f, -2.f))
     };
-    float time_step = 0.01f;
+    float time_step = 0.1f;
     float restitution = 1.f;
-    float force_unit = 1.f;
+    float force_unit = 0.1f;
+    float room_scale_half = 5.f;
 
     // camera information, from https://github.com/tum-pbs/game-physics-template/blob/main/guide.md
     glm::mat4 camera_mat = glm::mat4(1.f);

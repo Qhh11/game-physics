@@ -17,6 +17,38 @@ glm::mat4 get_world_from_obj(RigidBox rb) {
 }
 
 void Scene4::simulateStep() {
+    // collision with walls: simply change the velocity of boxes due to a potential bug in checkCollisionSAT
+    // according to https://zulip.in.tum.de/#narrow/stream/2676-GamePhysics-2024.2F2025/topic/.5BExercise.202.5D.20Wrong.20collision.20point.20from.20collision.20function/near/1727896
+    for (auto& box: boxes) {
+        auto rot = glm::mat3_cast(box.orientation);
+        std::vector<glm::vec3> vertices = {
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(1.f, 1.f, 1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(1.f, 1.f, -1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(1.f, -1.f, 1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(-1.f, 1.f, 1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(1.f, -1.f, -1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(-1.f, 1.f, -1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(-1.f, -1.f, 1.f),
+            box.x_cm + rot * 0.5f * box.extent * glm::vec3(-1.f, -1.f, -1.f)
+        };
+
+        // assumption: box size is never greater than the room size
+        for (auto vertex: vertices) {
+            if (vertex.z > room_scale_half && box.velocity.z > 0 ||
+                vertex.z < -room_scale_half && box.velocity.z < 0) {
+                box.velocity *= glm::vec3(1.f, 1.f, -restitution);
+            }
+            if (vertex.y > room_scale_half && box.velocity.y > 0 ||
+                vertex.y < -room_scale_half && box.velocity.y < 0) {
+                box.velocity *= glm::vec3(1.f, -restitution, 1.f);
+            }
+            if (vertex.x > room_scale_half && box.velocity.x > 0 ||
+                vertex.x < -room_scale_half && box.velocity.x < 0) {
+                box.velocity *= glm::vec3(-restitution, 1.f, 1.f);
+            }
+        }
+    }
+
     // check collision among boxes; apply via momentum changes if any
     for (int i = 0; i < boxes.size(); ++i) {
         for (int j = i + 1; j < boxes.size(); ++j) {
@@ -79,7 +111,7 @@ void Scene4::simulateStep() {
 }
 
 void Scene4::onDraw(Renderer &renderer) {
-    renderer.drawWireCube(glm::vec3(0), glm::vec3(5), glm::vec3(1));
+    renderer.drawWireCube(glm::vec3(0), glm::vec3(room_scale_half * 2), glm::vec3(1));
     
     for (auto& box: boxes) {
         renderer.drawCube(box.x_cm, box.orientation, box.extent, box.color);
