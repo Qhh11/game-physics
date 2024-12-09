@@ -48,7 +48,7 @@ public:
     void init() override;
     void simulateStep() override;
     void onDraw(Renderer &renderer) override;
-    // void onGUI() override;
+    void onGUI() override;
     
 private:
     std::vector<RigidBox> boxes = {

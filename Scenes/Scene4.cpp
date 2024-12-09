@@ -124,3 +124,9 @@ void Scene4::onDraw(Renderer &renderer) {
     right = inverse(camera_mat) * glm::vec4(1.f, 0.f, 0.f, 0.f);
     up = inverse(camera_mat) * glm::vec4(0.f, 1.f, 0.f, 0.f);
 }
+
+void Scene4::onGUI() {
+    ImGui::Text("Use keyboard to apply force on the RED box:\nLeft, Right, Up, Down, I (Inside), O (Outside)");
+    ImGui::SliderFloat("Time Step", &time_step, 0.001f, 0.5f);
+    ImGui::SliderFloat("Restitution", &restitution, 0.f, 1.f);
+}
