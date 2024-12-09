@@ -56,12 +56,12 @@ private:
         // RigidBox(glm::vec3(0.f, 1.f, 1.f), glm::vec4(0.f, 1.f, 0.f, 1.f)),
         // RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f)),
         // RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f))
-        RigidBox(glm::vec3(0.f), glm::vec4(1.f), glm::vec3(0.f), glm::quat(glm::vec3(0.f, 0.f, glm::radians(90.f))), 2.f, glm::vec3(1.f, 0.6f, 0.5f))
-        // RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f), glm::vec3(0.f), glm::quat(glm::vec3(0.f))),
+        // RigidBox(glm::vec3(0.f), glm::vec4(1.f), glm::vec3(0.f), glm::quat(glm::vec3(0.f, 0.f, glm::radians(90.f))), 2.f, glm::vec3(1.f, 0.6f, 0.5f))
+        RigidBox(glm::vec3(0.f, 1.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f), glm::vec3(0.f), glm::quat(glm::vec3(0.f)), 2.f),
         // RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.f, -0.1f), glm::quat(glm::vec3(0.f)))
-        // RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.f, -0.1f), glm::quat(glm::vec3(glm::radians(45.f), 0.f, glm::radians(45.f))))
+        RigidBox(glm::vec3(0.f, 0.f, 0.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.5f, 0.f), glm::quat(glm::vec3(0.f, glm::radians(45.f), glm::radians(45.f))), 1.f)
         // RigidBox(glm::vec3(0.f, 0.f, 0.f), glm::vec4(1.f, 0.f, 0.f, 1.f), glm::vec3(0.1f, 0.f, 0.f), glm::quat(glm::vec3(0.f, glm::radians(45.f), 0.f)))
     };
-    float time_step = 2.f;
+    float time_step = 0.01f;
     float restitution = 1.f;
 };
