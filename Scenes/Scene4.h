@@ -64,4 +64,11 @@ private:
     };
     float time_step = 0.01f;
     float restitution = 1.f;
+    float force_unit = 1.f;
+
+    // camera information, from https://github.com/tum-pbs/game-physics-template/blob/main/guide.md
+    glm::mat4 camera_mat = glm::mat4(1.f);
+    glm::vec3 fwd = glm::vec3(1.f, 0.f, 0.f);
+    glm::vec3 right = glm::vec3(0.f, 1.f, 0.f);
+    glm::vec3 up = glm::vec3(0.f, 0.f, 1.f);
 };

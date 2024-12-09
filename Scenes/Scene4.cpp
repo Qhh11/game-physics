@@ -43,6 +43,18 @@ void Scene4::simulateStep() {
         }
     }
 
+    // keyboard interaction: apply force on the first (0-th) box
+    if (!boxes.empty()) {
+        glm::vec3 force = glm::vec3(0.f);
+        if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) { force -= force_unit * right; }
+        if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) { force += force_unit * right; }
+        if (ImGui::IsKeyDown(ImGuiKey_DownArrow)) { force -= force_unit * up; }
+        if (ImGui::IsKeyDown(ImGuiKey_UpArrow)) { force += force_unit * up; }
+        if (ImGui::IsKeyDown(ImGuiKey_I)) { force -= force_unit * fwd; }
+        if (ImGui::IsKeyDown(ImGuiKey_O)) { force += force_unit * fwd; }
+        boxes[0].external_force += force;
+    }
+
     for (auto& box: boxes) {
         box.x_cm += time_step * box.velocity;
 
@@ -70,4 +82,10 @@ void Scene4::onDraw(Renderer &renderer) {
     for (auto& box: boxes) {
         renderer.drawCube(box.x_cm, box.orientation, box.extent, box.color);
     }
+
+    // update camera information; from https://github.com/tum-pbs/game-physics-template/blob/main/guide.md
+    camera_mat = renderer.camera.viewMatrix;
+    fwd = inverse(camera_mat) * glm::vec4(0.f, 0.f, 1.f, 0.f);
+    right = inverse(camera_mat) * glm::vec4(1.f, 0.f, 0.f, 0.f);
+    up = inverse(camera_mat) * glm::vec4(0.f, 1.f, 0.f, 0.f);
 }
