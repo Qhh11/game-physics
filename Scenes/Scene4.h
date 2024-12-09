@@ -17,7 +17,7 @@ struct RigidBox {
     RigidBox(glm::vec3 center = glm::vec3(0.f),
              glm::vec4 color = glm::vec4(1.f),
              glm::vec3 velocity = glm::vec3(0.f),
-             glm::quat orientation = glm::quat(1.f, 0.f, 0.f, 0.f),
+             glm::quat orientation = glm::quat(glm::vec3(0.f)),
              float mass = 1.f,
              glm::vec3 extent = glm::vec3(0.5f))
         : total_mass(mass),
@@ -56,8 +56,9 @@ private:
         // RigidBox(glm::vec3(0.f, 1.f, 1.f), glm::vec4(0.f, 1.f, 0.f, 1.f)),
         // RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f)),
         // RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f))
-        RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f), glm::vec3(0.f), glm::quat(1.f, 0.f, 0.f, 0.f)),
-        RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.f, -0.1f), glm::quat(1.f, glm::radians(45.f), 0.f, glm::radians(45.f)))
+        RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f), glm::vec3(0.f), glm::quat(glm::vec3(0.f))),
+        RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.f, -0.1f), glm::quat(glm::vec3(glm::radians(45.f), 0.f, glm::radians(45.f)))),
+        RigidBox(glm::vec3(0.f, 0.f, 0.f), glm::vec4(1.f, 0.f, 0.f, 1.f), glm::vec3(0.1f, 0.f, 0.f), glm::quat(glm::vec3(0.f, glm::radians(45.f), 0.f)))
     };
     float time_step = 0.01f;
     float restitution = 1.f;
