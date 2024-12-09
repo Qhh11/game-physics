@@ -17,8 +17,9 @@ glm::mat4 get_world_from_obj(RigidBox rb) {
 }
 
 void Scene4::simulateStep() {
-    // collision with walls: simply change the velocity of boxes due to a potential bug in checkCollisionSAT
+    // collision with walls: simple bounce but not "collision with fix object", due to a potential bug in checkCollisionSAT
     // according to https://zulip.in.tum.de/#narrow/stream/2676-GamePhysics-2024.2F2025/topic/.5BExercise.202.5D.20Wrong.20collision.20point.20from.20collision.20function/near/1727896
+    // and to https://zulip.in.tum.de/#narrow/stream/2676-GamePhysics-2024.2F2025/topic/.E2.9C.94.20.5BExercise.202.5D.20Clarification.20on.20Walls.2FFloor.20for.20Scene4/near/1724137
     for (auto& box: boxes) {
         auto rot = glm::mat3_cast(box.orientation);
         std::vector<glm::vec3> vertices = {
