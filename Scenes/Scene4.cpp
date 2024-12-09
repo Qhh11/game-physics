@@ -56,14 +56,16 @@ void Scene4::simulateStep() {
     }
 
     for (auto& box: boxes) {
-        box.x_cm += time_step * box.velocity;
-
-        box.velocity += time_step * box.external_force / box.total_mass;
+        // apply collision first
         box.velocity += box.delta_momentum / box.total_mass;
 
         box.orientation += time_step * 0.5f * glm::quat(0, box.angular_velocity) * box.orientation;
         box.orientation = glm::normalize(box.orientation);
         box.angular_momentum += time_step * box.torque;
+        
+        box.x_cm += time_step * box.velocity;
+
+        box.velocity += time_step * box.external_force / box.total_mass;
 
         auto rot = glm::mat3_cast(box.orientation);
         box.inertia_inversed = rot * box.inertia_inversed * glm::transpose(rot);
