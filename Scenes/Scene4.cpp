@@ -51,6 +51,7 @@ void Scene4::simulateStep() {
         box.velocity += box.delta_momentum / box.total_mass;
 
         box.orientation += time_step * 0.5f * glm::quat(0, box.angular_velocity) * box.orientation;
+        box.orientation = glm::normalize(box.orientation);
         box.angular_momentum += time_step * box.torque;
 
         auto rot = glm::mat3_cast(box.orientation);

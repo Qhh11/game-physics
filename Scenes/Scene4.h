@@ -52,10 +52,12 @@ public:
     
 private:
     std::vector<RigidBox> boxes = {
-        RigidBox(glm::vec3(0.f, 1.f, 0.f), glm::vec4(1.f, 0.f, 0.f, 1.f)),
-        RigidBox(glm::vec3(0.f, 1.f, 1.f), glm::vec4(0.f, 1.f, 0.f, 1.f)),
-        RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f)),
-        RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f))
+        // RigidBox(glm::vec3(0.f, 1.f, 0.f), glm::vec4(1.f, 0.f, 0.f, 1.f)),
+        // RigidBox(glm::vec3(0.f, 1.f, 1.f), glm::vec4(0.f, 1.f, 0.f, 1.f)),
+        // RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f)),
+        // RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f))
+        RigidBox(glm::vec3(1.f, 0.f, 0.f), glm::vec4(0.f, 0.f, 1.f, 1.f), glm::vec3(0.f), glm::quat(1.f, 0.f, 0.f, 0.f)),
+        RigidBox(glm::vec3(1.f, 0.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f), glm::vec3(0.f, 0.f, -0.1f), glm::quat(1.f, glm::radians(45.f), 0.f, glm::radians(45.f)))
     };
     float time_step = 0.01f;
     float restitution = 1.f;
