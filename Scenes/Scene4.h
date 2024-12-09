@@ -58,7 +58,7 @@ private:
         RigidBox(glm::vec3(0.f, 0.f, 2.f)),
         RigidBox(glm::vec3(0.f, 0.f, -2.f))
     };
-    float time_step = 0.1f;
+    float time_step = 0.01f;
     float restitution = 1.f;
     float force_unit = 0.1f;
     float room_scale_half = 5.f;
