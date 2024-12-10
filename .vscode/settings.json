@@ -4,4 +4,5 @@
         "${workspaceFolder}/src/**",
         "${workspaceFolder}/thirdparty/**",
     ],
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
 }
