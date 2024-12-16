@@ -3,9 +3,10 @@
 #include <iostream>
 
 Scene1::Scene1()
-    : x0(0.0f, 0.0f, 0.0f), x1(0.0f, 2.0f, 0.0f),
-      v0(-1.0f, 0.0f, 0.0f), v1(1.0f, 0.0f, 0.0f),
-      springLength(1.0f), stiffness(40.0f), mass(10.0f), dt(0.1f) {}
+    : x0(0.0f, 0.0f, 0.0f), x1(0.0f, 2.0f, 0.0f), v0(-1.0f, 0.0f, 0.0f), v1(1.0f, 0.0f, 0.0f), springLength(1.0f),
+      stiffness(40.0f), mass(10.0f), dt(0.1f)
+{
+}
 
 void Scene1::init()
 {
@@ -18,7 +19,13 @@ void Scene1::eulerIntegration(glm::vec3 &pos, glm::vec3 &vel, const glm::vec3 &a
     vel += acc * dt;
 }
 
-void Scene1::midpointIntegration(glm::vec3 &pos0, glm::vec3 &vel0, glm::vec3 &pos1, glm::vec3 &vel1, const glm::vec3 &acc0, const glm::vec3 &acc1, float dt)
+void Scene1::midpointIntegration(glm::vec3 &pos0,
+                                 glm::vec3 &vel0,
+                                 glm::vec3 &pos1,
+                                 glm::vec3 &vel1,
+                                 const glm::vec3 &acc0,
+                                 const glm::vec3 &acc1,
+                                 float dt)
 {
     glm::vec3 x0_mid, v0_mid;
     calculateMidpoint(x0, v0, acc0, dt, x0_mid, v0_mid);
